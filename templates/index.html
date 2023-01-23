@@ -1,12 +1,34 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{%static 'css/style.css'%}">
     <title> PASTELERIA | Sol Bassi Bakery</title>
 </head>
 <body>
+    {% if messages %}
+    {% for message in messages %}
+            {% if message.tags == 'success' %}
+
+            <div class="stock">
+                {{message}}
+                <button type="button" data-dismiss="alert">x</button>
+            </div>
+            {% else %}
+            <div class="sinstock">
+                {{message}}
+            </div>
+
+            {%endif%}
+    {% endfor %}
+{%endif%}
+
+
+
  <h1>{{saludo}}</h1>
  <h2>{{consulta}}</h2>
  <h3>{{encabezado}}</h3>
@@ -16,14 +38,15 @@
  <ul>
 
     {% for product in products %}
+
     <li>
         {{product.titulo}}
 
-        {% if product.stock %}
-        <span> - {{product.precio}}</span>
-        {%else%}
-        <span> - No disponible, lo siento</span>
-        {%endif%}
+            {% if product.stock %}
+            <span class="stock">   - {{product.precio}}</span>
+            {%else%}
+            <span class="sinstock"> - No disponible, lo siento</span>
+            {%endif%}
     </li>
     {% endfor %}
  </ul>
